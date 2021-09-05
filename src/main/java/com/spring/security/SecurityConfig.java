@@ -83,5 +83,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .tokenValiditySeconds(3600)
                 .alwaysRemember(true)
                 .userDetailsService(userDetailsService);
+
+        //동시 세션 제어
+
+        http.sessionManagement()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(true);
     }
 }
