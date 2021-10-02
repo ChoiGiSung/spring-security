@@ -11,8 +11,23 @@ public class Controller {
         return "home";
     }
 
-    @GetMapping("/loginPage")
-    public String loginPage(){
-        return "loginPage";
+    @GetMapping("/user")
+    public String user(){
+        return "user";
+    }
+
+    @GetMapping("/sample")
+    public String sample(){
+        return "sample";
+    }
+
+    @GetMapping("/admin/pay")
+    public String adminPay(){
+        return "adminPay";
+    }
+
+    @GetMapping("/admin/**")
+    public String admin(){
+        return "admin";
     }
 }
