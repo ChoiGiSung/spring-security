@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -30,6 +31,7 @@ import java.io.IOException;
 @EnableWebSecurity
 @Slf4j
 @RequiredArgsConstructor
+@Order(1)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService customUserDetailService;
@@ -62,16 +64,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .loginProcessingUrl("/login_proc")
                 .defaultSuccessUrl("/")
-                .permitAll()
+                .permitAll();
 
-        .and()
-        .addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-    }
+         }
 
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+
 
 
 
@@ -80,10 +77,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
-    @Bean
-    public AjaxAuthenticationFilter ajaxAuthenticationFilter() throws Exception {
-        AjaxAuthenticationFilter ajaxAuthenticationFilter = new AjaxAuthenticationFilter();
-        ajaxAuthenticationFilter.setAuthenticationManager(authenticationManagerBean());
-        return ajaxAuthenticationFilter;
-    }
+
 }
